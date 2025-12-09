@@ -7,7 +7,7 @@
 ;; Version: 0.1.0
 ;; Package-Requires: ((emacs "26.1"))
 ;; Keywords: languages, tools, build
-;; URL: https://github.com/pbibergal/fastbuild-bff-mode
+;; URL: https://github.com/cyberkm/fastbuild-bff-mode
 ;; SPDX-License-Identifier: GPL-3.0-or-later
 
 ;; This program is free software: you can redistribute it and/or modify
