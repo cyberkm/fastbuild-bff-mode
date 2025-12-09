@@ -24,26 +24,8 @@ Emacs major mode for [FASTBuild](https://www.fastbuild.org/) BFF (Build Configur
 
 ## Installation
 
-### Manual
-
 ```elisp
-;; Add to your init.el
-(add-to-list 'load-path "/path/to/fastbuild-bff-mode")
-(require 'fastbuild-bff-mode)
-```
-
-### use-package (manual)
-
-```elisp
-(use-package fastbuild-bff-mode
-  :load-path "/path/to/fastbuild-bff-mode")
-```
-
-### MELPA (coming soon)
-
-```elisp
-(use-package fastbuild-bff-mode
-  :ensure t)
+(use-package fastbuild-bff-mode)
 ```
 
 ## Usage
