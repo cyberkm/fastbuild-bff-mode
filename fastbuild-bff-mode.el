@@ -348,9 +348,7 @@ Returns nil if brace is closed on the same line or at end of line."
          ((fastbuild-bff--in-string-p) (forward-char 1))
          ((fastbuild-bff--in-comment-p) (goto-char line-end))
          ((memq (char-after) '(?\{ ?\[))
-          (let ((open-char (char-after))
-                (close-char (if (eq (char-after) ?\{) ?\} ?\]))
-                (open-pos (point)))
+          (let ((close-char (if (eq (char-after) ?\{) ?\} ?\])))
             (forward-char 1)
             (skip-chars-forward " \t")
             ;; Check if there's content and brace is NOT closed on same line
@@ -372,7 +370,7 @@ Returns nil if brace is closed on the same line or at end of line."
       result)))
 
 (defun fastbuild-bff--current-line-closes-p ()
-  "Check if current line starts with scope-closing token."
+  "Return non-nil if current line has a scope-closing token at start."
   (save-excursion
     (beginning-of-line)
     (skip-chars-forward " \t")
@@ -381,7 +379,7 @@ Returns nil if brace is closed on the same line or at end of line."
         (looking-at "#\\(endif\\|else\\)\\b"))))
 
 (defun fastbuild-bff--current-line-closes-brace-p ()
-  "Check if current line starts with } or ]."
+  "Return non-nil if current line has } or ] at start."
   (save-excursion
     (beginning-of-line)
     (skip-chars-forward " \t")
@@ -409,14 +407,14 @@ Returns nil if brace is closed on the same line or at end of line."
           (current-column))))))
 
 (defun fastbuild-bff--current-line-starts-with-plus-p ()
-  "Check if current line starts with +."
+  "Return non-nil if current line has + at start."
   (save-excursion
     (beginning-of-line)
     (skip-chars-forward " \t")
     (eq (char-after) ?+)))
 
 (defun fastbuild-bff--prev-line-plus-column ()
-  "If previous non-empty line starts with +, return its column. Else nil."
+  "Return column of + if previous non-empty line has + at start.  Else nil."
   (save-excursion
     (forward-line -1)
     (while (and (not (bobp)) (looking-at-p "^\\s-*$"))
@@ -427,7 +425,7 @@ Returns nil if brace is closed on the same line or at end of line."
       (current-column))))
 
 (defun fastbuild-bff--prev-line-equals-column ()
-  "If previous non-empty line has =, return column of =. Else nil."
+  "Return column of = if previous non-empty line has =.  Else nil."
   (save-excursion
     (forward-line -1)
     (while (and (not (bobp)) (looking-at-p "^\\s-*$"))
@@ -445,7 +443,7 @@ Returns nil if brace is closed on the same line or at end of line."
         (current-column)))))
 
 (defun fastbuild-bff--prev-line-is-continuation-p ()
-  "Check if previous non-empty line starts with +."
+  "Return non-nil if previous non-empty line has + at start."
   (save-excursion
     (forward-line -1)
     (while (and (not (bobp)) (looking-at-p "^\\s-*$"))
@@ -455,7 +453,7 @@ Returns nil if brace is closed on the same line or at end of line."
     (eq (char-after) ?+)))
 
 (defun fastbuild-bff--prev-line-starts-with-close-brace-p ()
-  "Check if previous non-empty line starts with } or ]."
+  "Return non-nil if previous non-empty line has } or ] at start."
   (save-excursion
     (forward-line -1)
     (while (and (not (bobp)) (looking-at-p "^\\s-*$"))
@@ -502,7 +500,7 @@ Previous line must start with } or ]."
          (memq (char-before) '(?\} ?\])))))
 
 (defun fastbuild-bff--find-opener-line-indent-from-end ()
-  "Find indentation of line containing matching opener for } or ] at end of prev line."
+  "Find indentation of opener's line for } or ] at end of prev line."
   (save-excursion
     (forward-line -1)
     (while (and (not (bobp)) (looking-at-p "^\\s-*$"))
