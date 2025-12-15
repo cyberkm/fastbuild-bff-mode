@@ -1,6 +1,6 @@
 ;;; fastbuild-bff-mode.el --- Major mode for FASTBuild BFF files -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2024 Free Software Foundation, Inc.
+;; Copyright (C) 2024 Pavel Bibergal
 
 ;; Author: Pavel Bibergal <cyberkm@gmail.com>
 ;; Maintainer: Pavel Bibergal <cyberkm@gmail.com>
@@ -320,10 +320,10 @@ Positive = more opens than closes."
       (when (looking-at "^\\s-*#else\\b")
         (setq delta (1+ delta)))
       ;; Count brackets
-      (while (< (point) (line-end-position))
+      (while (not (eolp))
         (cond
          ((fastbuild-bff--in-string-p) (forward-char 1))
-         ((fastbuild-bff--in-comment-p) (goto-char (line-end-position)))
+         ((fastbuild-bff--in-comment-p) (end-of-line))
          ((memq (char-after) '(?\{ ?\[))
           (setq delta (1+ delta))
           (forward-char 1))
@@ -496,7 +496,7 @@ Previous line must start with } or ]."
       (forward-line -1))
     (end-of-line)
     (skip-chars-backward " \t")
-    (and (> (point) (line-beginning-position))
+    (and (not (bolp))
          (memq (char-before) '(?\} ?\])))))
 
 (defun fastbuild-bff--find-opener-line-indent-from-end ()
@@ -507,7 +507,7 @@ Previous line must start with } or ]."
       (forward-line -1))
     (end-of-line)
     (skip-chars-backward " \t")
-    (when (and (> (point) (line-beginning-position))
+    (when (and (not (bolp))
                (memq (char-before) '(?\} ?\])))
       (forward-char -1)  ; move onto the close brace
       (let ((close-char (char-after))
