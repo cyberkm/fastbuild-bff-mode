@@ -196,6 +196,8 @@
     ("ListDependencies" . (".Targets" ".ListDependenciesOutput"))
     ("RemoveDir" . (".RemovePaths" ".RemovePathsRecurse" ".RemovePatterns"
                     ".RemoveExcludePaths" ".PreBuildDependencies"))
+    ("VSProjectExternal" . (".ExternalProjectPath" ".ProjectGuid"
+                            ".ProjectTypeGuid" ".ProjectConfigs"))
     ("Error" . (".ErrorMessage"))
     ("Print" . (".PrintMessage")))
   "Alist mapping FASTBuild functions to their properties.")
