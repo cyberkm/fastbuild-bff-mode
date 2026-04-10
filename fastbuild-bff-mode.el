@@ -69,7 +69,7 @@
   "List of FASTBuild built-in functions.")
 
 (defconst fastbuild-bff-directives
-  '("#define" "#undef" "#if" "#else" "#endif" "#import" "#include" "#once")
+  '("#define" "#undef" "#if" "#elif" "#else" "#endif" "#import" "#include" "#once")
   "List of FASTBuild preprocessor directives.")
 
 (defconst fastbuild-bff-builtin-variables
@@ -316,8 +316,8 @@ Positive = more opens than closes."
       ;; #if opens a scope
       (when (looking-at "^\\s-*#if\\b")
         (setq delta (1+ delta)))
-      ;; #else closes one scope and opens another
-      (when (looking-at "^\\s-*#else\\b")
+      ;; #else/#elif closes one scope and opens another
+      (when (looking-at "^\\s-*#e\\(?:lse\\|lif\\)\\b")
         (setq delta (1+ delta)))
       ;; Count brackets
       (while (not (eolp))
@@ -376,7 +376,7 @@ Returns nil if brace is closed on the same line or at end of line."
     (skip-chars-forward " \t")
     (or (eq (char-after) ?\})
         (eq (char-after) ?\])
-        (looking-at "#\\(endif\\|else\\)\\b"))))
+        (looking-at "#\\(endif\\|else\\|elif\\)\\b"))))
 
 (defun fastbuild-bff--current-line-closes-brace-p ()
   "Return non-nil if current line has } or ] at start."
@@ -560,11 +560,11 @@ Returns (indent . scope-delta) of that line."
      ((fastbuild-bff--current-line-closes-brace-p)
       (or (fastbuild-bff--find-matching-open-brace-column)
           0))
-     ;; Current line is #endif or #else - dedent
+     ;; Current line is #endif, #else, or #elif - dedent
      ((save-excursion
         (beginning-of-line)
         (skip-chars-forward " \t")
-        (looking-at "#\\(endif\\|else\\)\\b"))
+        (looking-at "#\\(endif\\|else\\|elif\\)\\b"))
       (let ((prev-indent 0)
             (scope-delta 0))
         (save-excursion
