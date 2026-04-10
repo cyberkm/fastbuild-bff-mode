@@ -1,4 +1,5 @@
 # fastbuild-bff-mode
+[![MELPA](https://melpa.org/packages/fastbuild-bff-mode-badge.svg)](https://melpa.org/#/fastbuild-bff-mode)
 
 Emacs major mode for [FASTBuild](https://www.fastbuild.org/) BFF (Build Configuration) files with syntax highlighting and context-aware completion.
 
