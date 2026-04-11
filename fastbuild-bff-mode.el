@@ -276,8 +276,14 @@
     ;; Built-in variables
     (,(concat "\\_<\\(" (regexp-opt fastbuild-bff-builtin-variables) "\\)\\_>")
      1 'fastbuild-bff-builtin-face)
-    ;; Variable references: $VarName$
-    ("\\$\\([A-Za-z_][A-Za-z0-9_]*\\)\\$"
+    ;; Variable references: $VarName$ (not preceded by ^ escape)
+    (,(lambda (limit)
+        (let (found)
+          (while (and (not found)
+                      (re-search-forward "\\$[A-Za-z_][A-Za-z0-9_]*\\$" limit t))
+            (unless (eq (char-before (match-beginning 0)) ?^)
+              (setq found t)))
+          found))
      0 'fastbuild-bff-variable-ref-face t)
     ;; Property/variable definitions: .PropertyName
     ("\\.\\([A-Za-z_][A-Za-z0-9_]*\\)"
@@ -290,7 +296,7 @@
      0 'font-lock-constant-face)
     ;; Build-time substitutions: %1, %2, etc.
     ("%[0-9]+"
-     0 'font-lock-constant-face))
+     0 'fastbuild-bff-variable-ref-face t))
   "Font lock keywords for `fastbuild-bff-mode'.")
 
 ;;; Indentation
