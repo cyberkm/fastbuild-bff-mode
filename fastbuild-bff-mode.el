@@ -278,7 +278,7 @@
      1 'fastbuild-bff-builtin-face)
     ;; Variable references: $VarName$
     ("\\$\\([A-Za-z_][A-Za-z0-9_]*\\)\\$"
-     0 'fastbuild-bff-variable-ref-face)
+     0 'fastbuild-bff-variable-ref-face t)
     ;; Property/variable definitions: .PropertyName
     ("\\.\\([A-Za-z_][A-Za-z0-9_]*\\)"
      0 'fastbuild-bff-property-face)
