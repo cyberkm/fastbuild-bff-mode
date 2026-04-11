@@ -721,6 +721,10 @@ Returns (indent . scope-delta) of that line."
   (setq-local indent-line-function #'fastbuild-bff-indent-line)
   ;; Completion
   (add-hook 'completion-at-point-functions #'fastbuild-bff-completion-at-point nil t)
+  ;; Imenu
+  (setq-local imenu-generic-expression
+              `(("Function" ,(concat "\\_<\\(" (regexp-opt fastbuild-bff-functions) "\\)\\s-*(\\s-*['\"]\\([^'\"]*\\)['\"]\\s-*)") 0)
+                ("User Function" "\\<function\\s-+\\([A-Za-z_][A-Za-z0-9_]*\\)" 1)))
   ;; Electric pairs
   (setq-local electric-pair-pairs '((?\{ . ?\})
                                     (?\( . ?\))
