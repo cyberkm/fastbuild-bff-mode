@@ -289,6 +289,17 @@
     ;; Built-in variables
     (,(concat "\\_<\\(" (regexp-opt fastbuild-bff-builtin-variables) "\\)\\_>")
      1 'fastbuild-bff-builtin-face)
+    ;; Dynamic variable names: ."Name_$X$" and ^"Name" (string outside
+    ;; a string).  Placed before the $VarName$ rule so references inside
+    ;; the name are still highlighted on top.
+    (,(lambda (limit)
+        (let (found)
+          (while (and (not found)
+                      (re-search-forward "[.^]\\(\"[^\"\n]*\"\\|'[^'\n]*'\\)" limit t))
+            (unless (nth 3 (save-excursion (syntax-ppss (match-beginning 0))))
+              (setq found t)))
+          found))
+     0 'fastbuild-bff-property-face t)
     ;; Variable references: $VarName$ (not preceded by ^ escape)
     (,(lambda (limit)
         (let (found)
