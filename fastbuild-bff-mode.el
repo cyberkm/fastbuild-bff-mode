@@ -697,6 +697,17 @@ Returns (indent . scope-delta) of that line."
           (push prop props))))
     (sort props #'string<)))
 
+(defun fastbuild-bff--user-function-names ()
+  "Return the names of user functions declared in the current buffer."
+  (let ((names '()))
+    (save-excursion
+      (goto-char (point-min))
+      (while (re-search-forward "^\\s-*function\\s-+\\([A-Za-z_][A-Za-z0-9_]*\\)" nil t)
+        (unless (or (fastbuild-bff--in-string-p)
+                    (fastbuild-bff--in-comment-p))
+          (push (match-string-no-properties 1) names))))
+    (nreverse names)))
+
 (defun fastbuild-bff-completion-at-point ()
   "Completion-at-point function for FASTBuild BFF mode."
   (when (not (or (fastbuild-bff--in-string-p)
@@ -732,6 +743,7 @@ Returns (indent . scope-delta) of that line."
        ((> end start)
         (list start end
               (append fastbuild-bff-functions
+                      (fastbuild-bff--user-function-names)
                       fastbuild-bff-keywords
                       fastbuild-bff-builtin-variables)
               :exclusive 'no))))))
