@@ -194,7 +194,7 @@
                        ".XCodeBuildWorkingDir" ".XCodeDocumentVersioning"
                        ".XCodeCommandLineArguments" ".XCodeCommandLineArgumentsDisabled"
                        ".XCodeOrganizationName"))
-    ("ListDependencies" . (".Targets" ".ListDependenciesOutput"))
+    ("ListDependencies" . (".Source" ".Dest" ".Patterns" ".PreBuildDependencies"))
     ("RemoveDir" . (".RemovePaths" ".RemovePathsRecurse" ".RemovePatterns"
                     ".RemoveDirs" ".RemoveRootDir" ".RemoveExcludePaths"
                     ".RemoveExcludeFiles" ".PreBuildDependencies"))
