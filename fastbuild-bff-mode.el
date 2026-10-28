@@ -224,8 +224,11 @@
     ;; Strings
     (modify-syntax-entry ?\" "\"" table)
     (modify-syntax-entry ?' "\"" table)
-    ;; Escape character
-    (modify-syntax-entry ?^ "\\" table)
+    ;; ^ is the escape character, but only inside strings.  Outside
+    ;; strings it is the parent-scope prefix (^.Var, ^"Name").  The
+    ;; string-only escape syntax is applied by
+    ;; `fastbuild-bff-syntax-propertize'.
+    (modify-syntax-entry ?^ "." table)
     ;; Punctuation
     (modify-syntax-entry ?. "." table)
     (modify-syntax-entry ?$ "." table)
@@ -316,6 +319,19 @@
   :type 'integer
   :safe #'integerp
   :group 'fastbuild-bff)
+
+(defun fastbuild-bff-syntax-propertize (start end)
+  "Give `^' escape syntax between START and END, but only inside strings.
+BFF uses `^' as the escape character within strings (^\" ^$ ^^), while
+outside strings `^' is the parent-scope prefix.  Marking `^' as an
+escape in the syntax table unconditionally would make `^\"Name\"'
+swallow the opening quote and leave the rest of the buffer inside a
+string."
+  (goto-char start)
+  (while (re-search-forward "\\^" end t)
+    (when (nth 3 (save-excursion (syntax-ppss (match-beginning 0))))
+      (put-text-property (match-beginning 0) (match-end 0)
+                         'syntax-table (string-to-syntax "\\")))))
 
 (defun fastbuild-bff--in-string-p ()
   "Return non-nil if point is inside a string."
@@ -727,6 +743,7 @@ Returns (indent . scope-delta) of that line."
   (setq-local comment-start-skip "\\(?://+\\|;+\\)\\s-*")
   ;; Font lock
   (setq-local font-lock-defaults '(fastbuild-bff-font-lock-keywords nil nil))
+  (setq-local syntax-propertize-function #'fastbuild-bff-syntax-propertize)
   ;; Indentation
   (setq-local indent-line-function #'fastbuild-bff-indent-line)
   ;; Completion
