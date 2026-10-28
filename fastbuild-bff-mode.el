@@ -156,7 +156,8 @@
                    ".CachePluginDLL" ".CachePluginDLLConfig" ".Workers"
                    ".WorkerConnectionLimit" ".DistributableJobMemoryLimitMiB"
                    ".ConcurrencyGroups"))
-    ("TextFile" . (".TextFileOutput" ".TextFileInputStrings" ".TextFileAlways"))
+    ("TextFile" . (".TextFileOutput" ".TextFileInputStrings" ".TextFileAlways"
+                   ".Hidden" ".PreBuildDependencies"))
     ("CSAssembly" . (".Compiler" ".CompilerOptions" ".CompilerOutput"
                     ".CompilerInputPath" ".CompilerInputPattern"
                     ".CompilerInputPathRecurse" ".CompilerInputExcludePath"
