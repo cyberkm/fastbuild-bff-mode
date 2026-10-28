@@ -287,6 +287,10 @@
     ;; Built-in variables
     (,(concat "\\_<\\(" (regexp-opt fastbuild-bff-builtin-variables) "\\)\\_>")
      1 'fastbuild-bff-builtin-face)
+    ;; Calls to user-defined functions: Name( ... ).  Built-in functions
+    ;; and #if helpers are matched by earlier rules and are not overridden.
+    ("\\_<\\([A-Za-z_][A-Za-z0-9_]*\\)\\s-*("
+     1 'fastbuild-bff-function-face)
     ;; Dynamic variable names: ."Name_$X$" and ^"Name" (string outside
     ;; a string).  Placed before the $VarName$ rule so references inside
     ;; the name are still highlighted on top.
