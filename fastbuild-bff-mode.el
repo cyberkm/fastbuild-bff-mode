@@ -207,9 +207,7 @@
                     ".RemoveDirs" ".RemoveRootDir" ".RemoveExcludePaths"
                     ".RemoveExcludeFiles" ".PreBuildDependencies"))
     ("VSProjectExternal" . (".ExternalProjectPath" ".ProjectGuid"
-                            ".ProjectTypeGuid" ".ProjectConfigs"))
-    ("Error" . (".ErrorMessage"))
-    ("Print" . (".PrintMessage")))
+                            ".ProjectTypeGuid" ".ProjectConfigs")))
   "Alist mapping FASTBuild functions to their properties.")
 
 ;;; Syntax Table
