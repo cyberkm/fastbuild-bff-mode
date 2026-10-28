@@ -196,7 +196,8 @@
                        ".XCodeOrganizationName"))
     ("ListDependencies" . (".Targets" ".ListDependenciesOutput"))
     ("RemoveDir" . (".RemovePaths" ".RemovePathsRecurse" ".RemovePatterns"
-                    ".RemoveExcludePaths" ".PreBuildDependencies"))
+                    ".RemoveDirs" ".RemoveRootDir" ".RemoveExcludePaths"
+                    ".RemoveExcludeFiles" ".PreBuildDependencies"))
     ("VSProjectExternal" . (".ExternalProjectPath" ".ProjectGuid"
                             ".ProjectTypeGuid" ".ProjectConfigs"))
     ("Error" . (".ErrorMessage"))
