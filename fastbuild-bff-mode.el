@@ -145,8 +145,8 @@
                ".ExecInputPathRecurse" ".ExecInputExcludePath" ".ExecInputExcludedFiles"
                ".ExecInputExcludePattern" ".ExecOutput" ".ExecArguments"
                ".ExecWorkingDir" ".ExecReturnCode" ".ExecUseStdOutAsOutput"
-               ".ExecAlways" ".ExecAlwaysShowOutput" ".PreBuildDependencies"
-               ".ConcurrencyGroupName" ".Environment"))
+               ".ExecAlways" ".ExecAlwaysShowOutput" ".Hidden"
+               ".PreBuildDependencies" ".ConcurrencyGroupName" ".Environment"))
     ("Test" . (".TestExecutable" ".TestOutput" ".TestInput" ".TestInputPath"
                ".TestInputPattern" ".TestInputPathRecurse" ".TestInputExcludePath"
                ".TestInputExcludedFiles" ".TestInputExcludePattern" ".TestArguments"
